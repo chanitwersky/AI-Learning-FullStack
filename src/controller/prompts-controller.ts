@@ -1,16 +1,15 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import AiService from '../serviceLayer/aiService'; 
 import { Prompt as PromptModel } from "../models";
 import promptsService from '../serviceLayer/prompts-service';
+
  
 
 export default class PromptController {
-    private promptsService!:promptsService;//לבדוק את ענין של סימן קריאה
-
-    constructor() {}
+    
+    constructor(private promptsService: promptsService) {}
    
-
-    async createPrompt(req: Request, res: Response): Promise<void> {
+    async createPrompt(req: Request, res: Response,next: NextFunction  ): Promise<void> {
         try {
             const { userId, category, subCategory, promptText } = req.body;
 
@@ -31,12 +30,22 @@ export default class PromptController {
                 success: false, 
                 message: "תקלה ביצירת השיעור באמצעות ה-AI" 
             });
+            next(error);
         }
     }
 
-    async getPromptsById(req: Request, res: Response):Promise<void>{
+    async getPromptsById(req: any, res: Response,next: NextFunction):Promise<void>{
         try{
             const id= req.params.userId;
+            const loggedInUserId = req.user.id;
+
+            if (id !== loggedInUserId) {
+                res.status(403).json({ 
+                    success: false, 
+                    message:"איך לך הרשאה לגשת להיסטוריה של משתמש אחר"
+                });
+                return;
+            }
             const prompts=await this.promptsService.getPromptsById(id);
             
             res.status(200).json({
@@ -50,10 +59,10 @@ export default class PromptController {
                 success: false, 
                 message: "תקלה בקבלת ההיסטוריה" 
             });
+            next(error);
+            
+        }
     }
-
-    
-}
 
 }
 

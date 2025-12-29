@@ -1,12 +1,11 @@
 import usersService from "../serviceLayer/users-service";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 
 export default class UsersController {
-    private usersService!:usersService;//לבדוק את ענין של סימן קריאה
 
-    constructor() {}
+    constructor(private usersService: usersService) {}
 
-    async createUser(req: Request, res: Response): Promise<void> {
+    async createUser(req: Request, res: Response,next: NextFunction): Promise<void> {
             try {
                 const { id, name, phoneNumber ,role} = req.body;
     
@@ -18,7 +17,8 @@ export default class UsersController {
                 const userId = await this.usersService.createUser(id, name, phoneNumber,role);
                 res.status(200).json({
                     success: true,
-                    data: userId
+                    token: userId.token,
+                    data: userId.user
                 });
     
             }catch (error) {
@@ -27,10 +27,11 @@ export default class UsersController {
                     success: false, 
                     message: "תקלה ביצירת המשתמש" 
                 });
+                next(error);
             }
         }
-    
-    async getAllUsersWithHistory(req: Request, res: Response):Promise<void>{
+
+    async getAllUsersWithHistory(req: Request, res: Response, next: NextFunction):Promise<void>{
         try{
             const usersWithHistory=await this.usersService.getAllUsersWithHistory();    
             res.status(200).json({  
@@ -46,7 +47,7 @@ export default class UsersController {
             }
         }
 
-    async getUserById(req: Request, res: Response): Promise<void> {
+    async getUserById(req: Request, res: Response, next: NextFunction): Promise<void> {
         const id=req.params.userId;
 
         if(!id){
@@ -66,8 +67,8 @@ export default class UsersController {
                     success: false, 
                     message: "תקלה בקבלת פרטי המשתמש"
                 });
+            next(error);
         }
-    
-    }
 
+    }
 }

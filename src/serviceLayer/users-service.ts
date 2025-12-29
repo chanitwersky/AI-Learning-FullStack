@@ -1,20 +1,31 @@
 import { Prompt as PromptModel } from "../models";
-import userstsDal from "../dalLayer/users-dal";
+import UsersDal from "../dalLayer/users-dal";
 import { User as UserModel } from "../models";
+import AuthUtils from "../utils/auth-utils";
 
 export default class usersService {
     
-    constructor(private usersDal:userstsDal ) {}
+    constructor(private usersDal: UsersDal) {}
 
-    async createUser(id: string, name: string, phoneNumber: string,role:"user" | "admin"):Promise<string>{
+    async createUser(id: string, name: string, phoneNumber: string,role:"user" | "admin"):Promise<any>{
         const user: UserModel = {
             id: id,
             name: name,
             phoneNumber: phoneNumber,
             role: role
         };
-        return await this.usersDal.createUser(user);
+        const newUser = await this.usersDal.createUser(user);
+
+        const payload = { 
+            id: id, 
+            role: role 
+        };
+
+        const token = AuthUtils.signJwt(payload);
+        return { user: newUser, token };
     }
+
+  
 
     async getAllUsersWithHistory():Promise<any[]>{
         return await this.usersDal.getAllUsersWithHistory();
