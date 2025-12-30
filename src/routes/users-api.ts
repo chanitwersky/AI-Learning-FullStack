@@ -18,10 +18,11 @@ export default class UsersApi {
     }
 
     private setRoutes() {
-        this.router.post("/user", MiddlewareHandler.validateNewUser, this.usersController.createUser.bind(this.usersController));
-        this.router.get("/users-history",this.middleware.verifyToken, MiddlewareHandler.isAdmin(this.usersService), 
+        this.router.post("/", MiddlewareHandler.validateNewUser, this.usersController.createUser.bind(this.usersController));
+        this.router.get("/history",this.middleware.verifyToken, MiddlewareHandler.isAdmin(this.usersService), 
         this.usersController.getAllUsersWithHistory.bind(this.usersController));
-        this.router.get("/user/:id",this.middleware.verifyToken, this.usersController.getUserById.bind(this.usersController));
+        this.router.get("/:id",this.middleware.verifyToken, this.usersController.getUserById.bind(this.usersController));
+        this.router.post("/login", this.usersController.login.bind(this.usersController));
 
     }
 

@@ -1,11 +1,11 @@
 import express, {Express} from "express";
 import dotenv from 'dotenv';
 import DbConn from "./utils/db-conn";
-
+import cors from "cors";
+dotenv.config();
 import UsersDal from "./dalLayer/users-dal";
 import UsersService from "./serviceLayer/users-service";
 import UsersApi from "./routes/users-api";
-dotenv.config();
 import PromptsService from "./serviceLayer/prompts-service";
 import PromptsDal from "./dalLayer/prompts-dal"; 
 import PromptsApi from "./routes/prompts-api";
@@ -13,6 +13,7 @@ import CategoriesDal from "./dalLayer/Categories-dal";
 import MiddlewareHandler from "./middleware/middleware-handler";
 import CategoriesService from "./serviceLayer/categories-service";
 import CategoriesApi from "./routes/categories-api";
+
 
 const HOST = "127.0.0.1";
 const PORT = 5000;
@@ -27,6 +28,7 @@ export default class App {
     }
 
     async init() {
+        this.app.use(cors());
         this.app.use(express.json());
 
         
@@ -44,7 +46,7 @@ export default class App {
         const promptsService = new PromptsService(promptsDal, categoriesDal);
         const promptsApi = new PromptsApi(promptsService);
 
-    
+        
         this.setRoutes(userApi, promptsApi, categoriesApi);
 }
 
@@ -72,3 +74,9 @@ export default class App {
     }
 
 }
+
+
+const myApp = new App();
+myApp.init().catch(err => {
+    console.error("Failed to start server:", err);
+});

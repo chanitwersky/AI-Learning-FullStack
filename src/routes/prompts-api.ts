@@ -15,9 +15,9 @@ export default class PromptsApi {
         this.setRoutes();
     }
     private setRoutes() {
-        this.router.post("/create-prompt",this.middleware.verifyToken,      
+        this.router.post("/",this.middleware.verifyToken,      
         MiddlewareHandler.validatePromptInput, this.promptsController.createPrompt.bind(this.promptsController));
-        this.router.get("/prompts/:userId",this.middleware.verifyToken,this.promptsController.getPromptsById.bind(this.promptsController));
+        this.router.get("/:userId",this.middleware.verifyToken,this.promptsController.getPromptsById.bind(this.promptsController));
         
     }
 

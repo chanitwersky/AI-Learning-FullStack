@@ -12,13 +12,14 @@ export default class usersDal {
         this.usersCollection = dbConn.getLearningDB().collection(USERS_COLLECTION_NAME);
     }
 
-    async createUser(user: UserModel): Promise<string> {
+    async createUser(user: UserModel): Promise<UserModel> {
         const existingUser = await this.usersCollection.findOne({ id: user.id });
         if (existingUser) {
-            throw new Error(`User with id ${user.id} already exists`);
-        }
+            throw new Error(`UserExists`);
+        };
+
         await this.usersCollection.insertOne(user);
-        return user.id;
+        return user;
     }
 
     async getAllUsersWithHistory(): Promise<any[]> {
@@ -42,4 +43,10 @@ export default class usersDal {
     async getUserById(id: string): Promise<UserModel | null> {
         return await this.usersCollection.findOne({ id: id });
     }
+
+    async getUserByPhoneNumber(phoneNumber: string): Promise<UserModel | null> {
+        return await this.usersCollection.findOne({ phoneNumber: phoneNumber });
+    }
+
+
 }

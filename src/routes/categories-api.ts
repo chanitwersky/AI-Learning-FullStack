@@ -16,11 +16,11 @@ export default class CategoriesApi {
         this.setRoutes();
     }
     private setRoutes() {
-        this.router.post("/create-category", this.middleware.verifyToken, MiddlewareHandler.isAdmin(this.usersService),
+        this.router.post("/category", this.middleware.verifyToken, MiddlewareHandler.isAdmin(this.usersService),
         MiddlewareHandler.validateCategoryInput, this.categoriesController.createCategory.bind(this.categoriesController)); 
-        this.router.post("/create-subcategory", this.middleware.verifyToken,MiddlewareHandler.isAdmin(this.usersService),
+        this.router.post("/subcategory", this.middleware.verifyToken,MiddlewareHandler.isAdmin(this.usersService),
         MiddlewareHandler.validateSubCategoryInput, this.categoriesController.createSubCategory.bind(this.categoriesController));
-        this.router.get("/show-categories",)
+        this.router.get("/categories", this.categoriesController.getAllCategoriesWithSubCategories.bind(this.categoriesController))
     }
     public getRouter() {
         return this.router;

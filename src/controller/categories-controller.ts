@@ -6,8 +6,8 @@ export default class categoriesController {
     constructor(private categoriesService: CategoriesServise) {}
     async createCategory(req: Request, res: Response,next: NextFunction): Promise<void> {
         try {
-            const { id, name } = req.body;
-            const category = await this.categoriesService.createCategory(id, name);
+            const {  name } = req.body;
+            const category = await this.categoriesService.createCategory( name);
             res.status(201).json(category);
         } catch (error) {
             console.error("Error in create category:", error);
@@ -21,8 +21,8 @@ export default class categoriesController {
 
     async createSubCategory(req: Request, res: Response,next: NextFunction): Promise<void> {
         try {
-            const { id, name , categoryId} = req.body;
-            const category = await this.categoriesService.createSubCategory(id, name, categoryId);
+            const {  name , categoryId} = req.body;
+            const category = await this.categoriesService.createSubCategory( name, categoryId);
             res.status(201).json(category);
         } catch (error) {
             console.error("Error in create sub category:", error);

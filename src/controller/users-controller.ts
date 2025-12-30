@@ -7,14 +7,14 @@ export default class UsersController {
 
     async createUser(req: Request, res: Response,next: NextFunction): Promise<void> {
             try {
-                const { id, name, phoneNumber ,password,role} = req.body;
+                const { id, name, phoneNumber ,password} = req.body;
     
                 if (!id) {
                     res.status(400).json({ message: "נא לספק את פרטיך"});
                     return;
                 }
 
-                const userId = await this.usersService.createUser(id, name, phoneNumber,password,role);
+                const userId = await this.usersService.createUser(id, name, phoneNumber,password);
                 res.status(200).json({
                     success: true,
                     token: userId.token,
@@ -22,14 +22,16 @@ export default class UsersController {
                 });
     
             }catch (error) {
-                console.error("Error in create User:", error);
-                res.status(500).json({ 
-                    success: false, 
-                    message: "תקלה ביצירת המשתמש" 
-                });
-                next(error);
+                console.error("Caught error:", error);
+
+                if (error instanceof Error && error.message === 'USER_ALREADY_EXISTS') {
+                    res.status(400).json({ message: 'המשתמש כבר קיים במערכת!' });
+                    return;
+                }
+
+                res.status(500).json({ message: 'שגיאת שרת פנימית' });
             }
-        }
+    }
 
     async getAllUsersWithHistory(req: Request, res: Response, next: NextFunction):Promise<void>{
         try{
@@ -48,7 +50,7 @@ export default class UsersController {
         }
 
     async getUserById(req: Request, res: Response, next: NextFunction): Promise<void> {
-        const id=req.params.userId;
+        const id=req.params.id;
 
         if(!id){
             res.status(400).json({ message: "נא לספק את מזהה המשתמש" });
@@ -71,4 +73,29 @@ export default class UsersController {
         }
 
     }
+
+    async login(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+        const { phoneNumber, password } = req.body;
+
+        if (!phoneNumber || !password) {
+            res.status(400).json({ message: "נא לספק מספר טלפון וסיסמה" });
+            return;
+        }
+
+        const result = await this.usersService.login(phoneNumber, password);
+        
+        res.status(200).json({
+            success: true,
+            message: "התחברת בהצלחה!",
+            ...result
+        });
+    } catch (error: any) {
+        res.status(401).json({ 
+            success: false, 
+            message: error.message 
+        });
+        next(error);
+    }
+}
 }
