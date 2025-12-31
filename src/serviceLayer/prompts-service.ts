@@ -17,7 +17,7 @@ export default class promptsService {
         const id = String(Math.ceil(Math.random() * 100000));
         const categoryId= await this.subCategoriesDal.getcategoryId(Sub_category);
         const subCategoryId= await this.subCategoriesDal.getSubCategoryId(Sub_category);
-        const aiResponse = await this.aiService.getLesson(Category, Sub_category, promptText);
+        const aiResponse = await this.aiService.getLessonMoke(Category, Sub_category, promptText);
         
 
         const newPrompt: PromptModel = {
@@ -36,6 +36,10 @@ export default class promptsService {
 
     async getPromptsById(userId:string):Promise<Array<PromptModel>>{
         return await this.promptsDal.getPromptsByUserId(userId);
+    }
+
+    async getLastPrompt(userId:string):Promise<string>{
+        return await this.promptsDal.getLastPrompt(userId);
     }
 
 

@@ -58,7 +58,7 @@ export default class CategoriesDal {
         return await this.categoriesCollection.aggregate([
                 {
                     $lookup: {
-                        from: "Category",          
+                        from: "sub_categories",          
                         localField: "id",          
                         foreignField: "categoryId",    
                         as: "learningHistory"     

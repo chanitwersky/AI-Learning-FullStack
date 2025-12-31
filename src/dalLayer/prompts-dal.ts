@@ -20,6 +20,17 @@ export default class promptsDal {
         return await this.promptsCollection.find({ userId: userId }).toArray();
     }
 
+    async getLastPrompt(userId: string): Promise<string> {
+    const results = await this.promptsCollection
+        .find({ userId: userId })
+        .sort({ _id: -1 })
+        .limit(1) 
+        .project({ response: 1, _id: 0 })         
+        .toArray();
+
+    return results[0].response
+}
+
     
 
 }
