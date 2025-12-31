@@ -1,0 +1,17 @@
+<nav class="navbar" *ngIf="isLoggedIn()">
+  <div class="nav-container">
+    <div class="logo">AI Learning</div>
+    
+    <div class="nav-links">
+      <button (click)="goToHome()">דף הבית</button>
+      <button (click)="goToLesson()">צור שיעור</button>
+      <button (click)="goToHistory()">היסטוריה</button>
+      <button *ngIf="userRole === 'admin'" (click)="goToAdmin()" class="admin-link">ניהול</button>
+    </div>
+
+    <div class="user-actions">
+      <span class="welcome-text">שלום, {{ userName }}</span>
+      <button class="logout-btn" (click)="logout()">התנתק</button>
+    </div>
+  </div>
+</nav>

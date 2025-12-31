@@ -1,0 +1,24 @@
+<div class="home-wrapper">
+  <section class="hero-section">
+    <h1>שלום, {{ userName }}</h1>
+    <p>ברוך הבא למרכז הלמידה האישי שלך.</p>
+  </section>
+
+  <div class="main-content-grid">
+
+    <div class="info-box info-blue">
+      <h3>🚀 מה אפשר לעשות כאן?</h3>
+      <ul>
+        <li>ליצור מערכי שיעור מבוססי AI</li>
+        <li>לצפות בהיסטוריית למידה</li>
+        <li>לקבל סיכומים ממוקדים לכל נושא</li>
+      </ul>
+    </div>
+
+    <div class="info-box admin-box" *ngIf="userRole === 'admin'">
+      <h3>🛠️ מרכז שליטה למנהל</h3>
+      <p>כמנהל המערכת, יש לך גישה לניהול משתמשים והגדרות מתקדמות דרך התפריט העליון.</p>
+    </div>
+
+  </div>
+</div>

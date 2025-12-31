@@ -23,6 +23,9 @@
       <button type="submit" [disabled]="loginForm.invalid">התחבר</button>
     </form>
     
-    <p class="footer-text">עדיין אין לך חשבון? <a routerLink="/register">הירשם כאן</a></p>
+    
+<p>עדיין אין לך חשבון? 
+  <span class="register-link" (click)="goToRegister()">הירשם עכשיו</span>
+</p>
   </div>
 </div>

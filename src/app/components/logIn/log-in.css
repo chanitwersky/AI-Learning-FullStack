@@ -108,3 +108,14 @@ button:disabled {
 .footer-text a:hover {
   text-decoration: underline;
 }
+
+.register-link {
+  color: #007bff; /* צבע כחול כמו הכפתור */
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.register-link:hover {
+  text-decoration: underline; /* קו תחתון במעבר עכבר */
+}

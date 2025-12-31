@@ -1,0 +1,19 @@
+<div class="res-wrapper">
+  <div class="res-card" *ngIf="answer; else loading">
+    <h2>השיעור המוכן שלך</h2>
+    
+    <div class="answer-content">
+      {{ answer }}
+    </div>
+
+    <button class="submit-btn" type="button" (click)="createNewLesson()">
+  צור שיעור חדש
+</button>
+  </div>
+
+  <ng-template #loading>
+    <div class="res-card">
+      <p>מכין את התוכן עבורך, רק רגע...</p>
+    </div>
+  </ng-template>
+</div>

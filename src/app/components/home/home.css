@@ -1,0 +1,102 @@
+/* מיכל ראשי עם מרווח מה-Navbar */
+.home-wrapper {
+  padding: 40px 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  direction: rtl; /* מבטיח יישור לימין */
+}
+
+/* באנר עליון - נקי ומרשים */
+.hero-section {
+  background-color: #ffffff;
+  padding: 50px 30px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+  border-bottom: 5px solid #007bff; /* פס כחול ממותג בתחתית */
+}
+
+.hero-section h1 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.hero-section p {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+/* גריד לתיבות המידע */
+.main-content-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+}
+
+/* עיצוב כללי לתיבות המידע */
+.info-box {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease;
+}
+
+.info-box:hover {
+  transform: translateY(-5px); /* אפקט ריחוף עדין */
+}
+
+.info-box h3 {
+  margin-top: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #333;
+}
+
+/* עיצוב רשימת היתרונות */
+.info-blue ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 15px;
+}
+
+.info-blue li {
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0f0;
+  color: #555;
+}
+
+.info-blue li:last-child {
+  border-bottom: none;
+}
+
+.info-blue li::before {
+  content: "✓";
+  color: #007bff;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+/* עיצוב תיבת מנהל */
+.admin-box {
+  border-top: 5px solid #28a745; /* צבע ירוק להבחנה של ניהול */
+  background-color: #f8fff9;
+}
+
+.admin-box h3 {
+  color: #28a745;
+}
+
+/* התאמה לניידים */
+@media (max-width: 600px) {
+  .hero-section h1 {
+    font-size: 1.8rem;
+  }
+  .home-wrapper {
+    padding: 20px 15px;
+  }
+}

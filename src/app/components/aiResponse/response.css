@@ -1,0 +1,78 @@
+/* שימוש באותו מיכל רקע אחיד */
+.res-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* נותן מרווח מלמעלה אם הטקסט ארוך */
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  direction: rtl;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 40px 20px;
+}
+
+/* כרטיס התוצאה - מבוסס על ה-register-card שלך */
+.res-card {
+  background: white;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 800px; /* רחב יותר כדי להציג תוכן לימודי בנוחות */
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 28px;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 15px;
+}
+
+.answer-content {
+  color: #444;
+  line-height: 1.8;
+  font-size: 18px;
+  white-space: pre-wrap; /* קריטי לשמירה על המבנה של ה-AI */
+  text-align: right;
+}
+
+/* כפתור חזרה או יצירה מחדש בסגנון שלך */
+.back-button {
+  width: auto;
+  min-width: 200px;
+  display: block;
+  margin: 30px auto 0;
+  padding: 14px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #0056b3;
+}
+
+/* העתיקי את זה ל-response.css */
+.submit-btn {
+  width: 100%;
+  padding: 14px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+}
+
+.submit-btn:hover {
+  background-color: #0056b3;
+}

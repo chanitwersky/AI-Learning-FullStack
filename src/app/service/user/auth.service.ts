@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root' // זה אומר שהסרביס זמין בכל האפליקציה
@@ -9,6 +9,8 @@ export class AuthService {
   
   private apiUrl = 'http://127.0.0.1:5000/api/users'; 
   private currentUser: any = null;
+  private userRoleSubject = new BehaviorSubject<string | null>(localStorage.getItem('role'));
+  private userNameSubject = new BehaviorSubject<string | null>(localStorage.getItem('userName'));
   constructor(private http: HttpClient) {}
 
   // התחברות (Login)
@@ -45,5 +47,20 @@ export class AuthService {
     }
     return this.currentUser;
   }
+
+    userRole$ = this.userRoleSubject.asObservable();
+    userName$ = this.userNameSubject.asObservable();
+
+    
+    updateUserStatus() {
+        this.userRoleSubject.next(localStorage.getItem('role'));
+        this.userNameSubject.next(localStorage.getItem('userName'));
+    }
+
+    
+    clearUserStatus() {
+        this.userRoleSubject.next(null);
+        this.userNameSubject.next(null);
+    }
 
 }
