@@ -22,23 +22,97 @@ export default class usersDal {
         return user;
     }
 
-    async getAllUsersWithHistory(): Promise<any[]> {
-    return await this.usersCollection.aggregate([
-        {
-            $lookup: {
-                from: "Prompt",          
-                localField: "id",          
-                foreignField: "userId",    
-                as: "learningHistory"     
-            }
+
+async getAllUsersWithHistory(): Promise<any[]> {
+  return await this.usersCollection.aggregate([
+
+    // חיבור היסטוריית הלמידה למשתמש
+    {
+      $lookup: {
+        from: "PromptModel",
+        localField: "id",
+        foreignField: "userId",
+        as: "learningHistory"
+      }
+    },
+
+    // פתיחת ההיסטוריה
+    {
+      $unwind: {
+        path: "$learningHistory",
+        preserveNullAndEmptyArrays: true
+      }
+    },
+
+    // הבאת קטגוריה
+    {
+      $lookup: {
+        from: "categories",
+        localField: "learningHistory.categoryId",
+        foreignField: "id",
+        as: "categoryDetails"
+      }
+    },
+
+    // הבאת תת־קטגוריה
+    {
+      $lookup: {
+        from: "sub_categories",
+        localField: "learningHistory.subCategoryId",
+        foreignField: "id",
+        as: "subCategoryDetails"
+      }
+    },
+
+    // הזרקת שמות לתוך learningHistory
+    {
+      $addFields: {
+        "learningHistory.categoryName": {
+          $arrayElemAt: ["$categoryDetails.name", 0]
         },
-        {
-            $project: {
-                password: 0 
-            }
+        "learningHistory.subCategoryName": {
+          $arrayElemAt: ["$subCategoryDetails.name", 0]
         }
-    ]).toArray();
+      }
+    },
+
+    // קיבוץ חזרה למשתמש אחד
+    {
+      $group: {
+        _id: "$_id",
+        id: { $first: "$id" },
+        name: { $first: "$name" },
+        phoneNumber: { $first: "$phoneNumber" },
+        role: { $first: "$role" },
+        learningHistory: { $push: "$learningHistory" }
+      }
+    },
+
+    // ✅ סינון: רק משתמשים עם היסטוריה אמיתית (לא [{}])
+    {
+      $match: {
+        learningHistory: {
+          $elemMatch: { _id: { $exists: true } }
+        }
+      }
+    },
+
+    // ניקוי שדות מיותרים
+    {
+      $project: {
+        password: 0,
+        categoryDetails: 0,
+        subCategoryDetails: 0
+      }
     }
+
+  ]).toArray();
+}
+
+
+
+
+
 
     async getUserById(id: string): Promise<UserModel | null> {
         return await this.usersCollection.findOne({ id: id });

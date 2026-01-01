@@ -12,8 +12,14 @@ export default class promptsDal {
     }
 
     async createPrompt(prompt: PromptModel): Promise<string> {
-        await this.promptsCollection.insertOne(prompt);
-        return prompt.response;
+        try {
+            const result = await this.promptsCollection.insertOne(prompt);
+            console.log("Insert result:", result); // בדוק אם מודפס בטרמינל
+            return prompt.response;
+        } catch (error) {
+            console.error("שגיאה בשמירה ל-DB:", error);
+            throw error; // חשוב לזרוק את השגיאה כדי שה-Controller ידע שמשהו השתבש
+    }
     }
 
     async getPromptsByUserId(userId: string): Promise<Array<PromptModel>> {

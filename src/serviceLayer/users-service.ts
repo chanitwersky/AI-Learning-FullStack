@@ -52,7 +52,7 @@ export default class UsersService {
     }
 
     async login(phoneNumber: string, password: string): Promise<any> {
-    // 1. מחפשים את המשתמש לפי הטלפון בעזרת הפונקציה שכתבת ב-DAL
+    
     const user = await this.usersDal.getUserByPhoneNumber(phoneNumber);
     
     if (!user) {

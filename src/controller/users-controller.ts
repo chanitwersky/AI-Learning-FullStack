@@ -46,6 +46,7 @@ export default class UsersController {
                     success: false, 
                     message: "תקלה בהצגת משתמשים והיסטורית הלמידה שלהם" 
                 });
+                next(error);//
             }
         }
 

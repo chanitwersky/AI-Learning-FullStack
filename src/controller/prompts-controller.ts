@@ -9,33 +9,41 @@ export default class PromptController {
     
     constructor(private promptsService: promptsService) {}
    
-    async createPrompt(req: any, res: Response,next: NextFunction  ): Promise<void> {
-        try {
-            const userId = req.user.id; 
+    async createPrompt(req: any, res: Response, next: NextFunction): Promise<void> {
+    try { // וודא שה-try קיים כאן
+        console.log("--- DEBUG START ---");
+        console.log("Full User Object from Token:", req.user);
+        console.log("Body received:", req.body);
+        
+        // שלב 1: חילוץ ה-ID בצורה בטוחה
+        const userId = req.user?.id || req.user?._id; 
+        console.log("Extracted userId:", userId);
+        
+        const { category, subCategory, promptText } = req.body;
 
-            const {  category, subCategory, promptText } = req.body;
-
-            if (!promptText) {
-                res.status(400).json({ message: "נא לספק טקסט לשיעור" });
-                return;
-            }
-
-            const lesson = await this.promptsService.createPrompt(userId, category, subCategory, promptText);
-            res.status(200).json({
-                success: true,
-                data: lesson
-            });
-
-        } catch (error:any) {
-            console.error("Error in createPrompt:", error);
-            res.status(500).json({ 
-                success: false, 
-                message: "תקלה ביצירת השיעור באמצעות ה-AI" 
-
-            });
-            next(error);
+        if (!userId) {
+             console.error("DEBUG: No userId found in req.user!");
+             res.status(401).json({ success: false, message: "משתמש לא מזוהה" });
+             return;
         }
+
+        // שלב 2: קריאה ל-Service
+        const lesson = await this.promptsService.createPrompt(userId, category, subCategory, promptText);
+        
+        res.status(200).json({
+            success: true,
+            data: lesson
+        });
+
+    } catch (error: any) {
+        console.error("Error in createPrompt:", error);
+        res.status(500).json({ 
+            success: false, 
+            message: "תקלה ביצירת השיעור" 
+        });
+        next(error);
     }
+}
 
     async getLastPrompt(req: any, res: Response,next: NextFunction):Promise<void>{
         try{
