@@ -31,7 +31,7 @@ export class LoginComponent {
         localStorage.setItem('token', res.token); 
         localStorage.setItem('role', userData.role); 
         localStorage.setItem('userName', userData.name);
-        localStorage.setItem('userId', userData.userId || res.id); 
+        localStorage.setItem('userId', userData.id || res.id); 
         this.authService.updateUserStatus();
         alert('ברוך הבא!');
         

@@ -1,0 +1,53 @@
+<div class="admin-container">
+  <div class="admin-header">
+    <h2>ניהול היסטוריית למידה - מערכת</h2>
+    <p>צפייה בכל השאילתות מאורגנות לפי משתמשים</p>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>תאריך</th>
+          <th>קטגוריה</th>
+          <th>תת-קטגוריה</th>
+          <th>השאלה (Prompt)</th>
+        </tr>
+      </thead>
+      
+      <ng-container *ngFor="let user of allUserHistory">
+        <tbody *ngIf="user.learningHistory?.length > 0">
+          
+          <tr class="user-group-row">
+            <td colspan="4" class="user-header-cell">
+              <i class="user-icon">👤</i>
+              <strong>{{ user.name }}</strong>
+              <span class="lesson-count">({{ user.learningHistory.length }} שיעורים)</span>
+            </td>
+          </tr>
+
+          <tr *ngFor="let historyItem of user.learningHistory" class="history-item-row">
+            <td class="date-column">{{ historyItem.createdAt | date:'dd/MM/yyyy HH:mm' }}</td>
+
+            <td>
+              <span class="category-badge main-cat">{{ historyItem.categoryName || '---' }}</span>
+            </td>
+
+            <td>
+              <span class="category-badge sub-cat">{{ historyItem.subCategoryName || '---' }}</span>
+            </td>
+            
+            <td class="prompt-cell" [title]="historyItem.prompt">
+              {{ historyItem.prompt ? (historyItem.prompt | slice:0:80) : 'אין תוכן' }}
+              {{ historyItem.prompt?.length > 80 ? '...' : '' }}
+            </td>
+          </tr>
+        </tbody>
+      </ng-container>
+    </table>
+  </div>
+
+  <div *ngIf="allUserHistory?.length === 0" class="no-data-card">
+    <p>לא נמצאו נתונים להצגה.</p>
+  </div>
+</div>

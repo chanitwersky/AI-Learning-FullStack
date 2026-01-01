@@ -1,0 +1,31 @@
+<div class="history-container">
+  <div class="history-header">
+    <h2>היסטוריית למידה</h2>
+    <p>כאן מופיעים כל השיעורים שיצרת בעבר</p>
+  </div>
+
+  <div class="cards-grid">
+    <div *ngFor="let item of userHistory" class="history-card">
+      <div class="card-date">{{ item.createdAt | date:'dd/MM/yyyy HH:mm' }}</div>
+
+  
+      
+      <!-- <div class="card-section">
+        <span class="label">השאלה שלך:</span>
+        <p class="question-text">{{ item.promptText }}</p>
+      </div> -->
+
+      <div class="divider"></div>
+
+      <div class="card-section">
+        <span class="label">תשובת המערכת:</span>
+        <div class="answer-text">{{ item.response }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="userHistory?.length === 0" class="no-data">
+    <p>עדיין לא נוצרה היסטוריה. זה הזמן ליצור שיעור חדש!</p>
+    <button routerLink="/lesson" class="btn btn-primary">צור שיעור ראשון עכשיו</button>
+  </div>
+</div>

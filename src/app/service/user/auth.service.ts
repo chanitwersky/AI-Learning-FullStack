@@ -41,12 +41,24 @@ export class AuthService {
 
   // שליפת המשתמש
   getUserData() {
-    if (!this.currentUser) {
-      const saved = localStorage.getItem('user');
-      this.currentUser = saved ? JSON.parse(saved) : null;
+  if (!this.currentUser) {
+    const id = localStorage.getItem('userId');
+    const name = localStorage.getItem('userName');
+    const role = localStorage.getItem('role');
+
+    if (id && name) {
+      this.currentUser = {
+        id: id,
+        name: name,
+        role: role
+      };
+    } else {
+      console.warn('לא נמצאו נתוני משתמש (userId או userName) ב-Storage');
+      this.currentUser = null;
     }
-    return this.currentUser;
   }
+  return this.currentUser;
+}
 
     userRole$ = this.userRoleSubject.asObservable();
     userName$ = this.userNameSubject.asObservable();

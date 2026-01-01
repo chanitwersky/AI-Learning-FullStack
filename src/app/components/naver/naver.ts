@@ -47,8 +47,7 @@ export class NavbarComponent implements OnInit {
   // פונקציות הניווט (אותן פונקציות שכתבנו קודם)
   goToHome() { this.router.navigate(['/home']); }
   goToLesson() { this.router.navigate(['/lesson']); }
-  goToHistory() { 
-    const userId = localStorage.getItem('userId');
-    this.router.navigate(['/history', userId]); 
+  goToHistory() { this.router.navigate(['/history'])}; 
+ 
   }
-}
+

@@ -1,0 +1,126 @@
+/* מיכל ראשי - שימוש באותו רקע אחיד כמו בדפי ה-Auth */
+.admin-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  direction: rtl;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 40px 20px;
+}
+
+/* כותרת הדף - סגנון זהה ל-h2 ב-Auth */
+.admin-header h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.admin-header p {
+  text-align: center;
+  color: #666;
+  margin-bottom: 40px;
+}
+
+/* מעטפת הטבלה - הופכת את הטבלה ל"כרטיס" לבן וגדול */
+.table-wrapper {
+  background: white;
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow: hidden; /* שומר על פינות מעוגלות */
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: right;
+}
+
+/* כותרות הטבלה */
+.admin-table thead th {
+  background-color: #f8f9fa;
+  color: #444;
+  padding: 15px;
+  font-weight: 600;
+  border-bottom: 2px solid #eee;
+}
+
+/* שורת כותרת משתמש - הקבוצה */
+.user-group-row {
+  background-color: #eef2f7 !important; /* צבע רקע עדין להפרדה */
+}
+
+.user-header-cell {
+  padding: 15px 20px !important;
+  color: #007bff; /* כחול כמו ב-Auth */
+  font-weight: bold;
+  font-size: 17px;
+  border-top: 1px solid #dee2e6;
+}
+
+.lesson-count {
+  margin-right: 15px;
+  font-weight: normal;
+  font-size: 14px;
+  color: #666;
+}
+
+/* שורות הנתונים עצמן */
+.history-item-row {
+  transition: background-color 0.2s ease;
+}
+
+.history-item-row:hover {
+  background-color: #fcfcfc;
+}
+
+.admin-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #f1f1f1;
+  vertical-align: middle;
+  color: #555;
+}
+
+/* עיצוב תגיות קטגוריה - סטייל עדין */
+.category-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.main-cat {
+  background-color: #eef2f7;
+  color: #007bff;
+}
+
+.sub-cat {
+  background-color: #f0fdf4;
+  color: #28a745; /* ירוק עדין לתת קטגוריה */
+}
+
+/* תא השאלה */
+.prompt-cell {
+  font-size: 14px;
+  color: #666;
+  max-width: 400px; /* הגבלת רוחב למניעת מתיחה */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* הודעת "אין נתונים" - זהה לכרטיס ב-Auth */
+.no-data-card {
+  background: white;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin: 50px auto;
+  text-align: center;
+  color: #666;
+}

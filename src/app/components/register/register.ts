@@ -21,7 +21,8 @@ export class RegisterComponent {
     password: new FormControl('', [
       Validators.required, 
       Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}')
-    ])
+    ]),
+    role: new FormControl('user')
   });
 
   constructor(private authService: AuthService, private router: Router) {}
@@ -39,7 +40,7 @@ export class RegisterComponent {
         }
 
         alert('נרשמת בהצלחה!');
-        this.router.navigate(['/logIn']); 
+        this.router.navigate(['/login']); 
       },
       error: (err) => {
         if (err.status === 400) {
